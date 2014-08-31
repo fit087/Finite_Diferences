@@ -9,16 +9,29 @@ import numpy as np
 
 def main():
 #Calculando o X a cada passo de tempo (0,05, 0,025, 0,0125)
+#    E=0
+    soma=0
     A=matrizIdent()
     B=matrizB()
     resultado=[]
     resultado.append(B)
-    for i in range(1):
+    for i in range(1,21):
        B=resolve(A,B)
-#       sum+=B-Sol_analitica
-#       E=h*np.square
        resultado.append(B)
-    return  resultado
+       if i==1:
+         plot(B)
+         b2=B
+    an=calculo()
+    i=0
+    for i in range(0,n):
+        diferenca=B[i]-an[i]
+        soma+=diferenca
+    E=h*np.square(soma)
+        
+#       sum+=(B-calculo())
+#       E=h*np.square(sum)
+    return  resultado,E,soma#,#b2
+#    plot(X)
 
     
     
@@ -27,6 +40,7 @@ def main():
 n= 21
 #    A = forme_matriz(n,m)
 kt=0.05
+
 d=0.05
 L=2.0
 u=1.0
@@ -36,6 +50,7 @@ print h
 k = 1.0
 #pi = 3.141592653
 t = 0
+tf=1
 d = 0.05
 u = 1.0
 a = 1.0
@@ -58,7 +73,7 @@ def coefB():
     
 # Coeficiente C
 def coefC():
-    return -((u*kt)/(2*h)-(d*kt)/(h**2))
+    return -((u*kt)/(2*h)+(d*kt)/(h**2))
         
 # Matriz Identidade
 def matrizIdent():
@@ -67,25 +82,26 @@ def matrizIdent():
 # Condição de Contorno
 def condCont(x):
 
-#    return math.exp(-4*(pi**2))*math.sin(2*pi*k*(x-u*t))
-    return math.exp(-v*(np.pi**2))*math.sin(2*np.pi*k*(2-u*t))
+    return math.exp(-v*(np.pi**2)*d*(k**2)*t)*math.sin(2*np.pi*k*(x-u*t))
+#    return math.exp(1)*math.sin(2*np.pi*k*(x-u*t))
     
 # Condição Inicial
 def condInic(x):
     return math.sin(2.0*np.pi*k*(x*1.0))
     
 ##Solução analítica
-def gerarAnalitica():
-    x=0
-    return math.exp(-v*(np.pi**2))*math.sin(2*np.pi*k*(x-u*t))
+def gerarAnalitica(x):
+#    x=0
+    return math.exp(-v*(np.pi**2)*d*(k**2)*t)*math.sin(2*np.pi*k*(x-u*tf))
     
-def Calculo():  
+def calculo():  
     x= 0
     matriz1 = [] 
-    while x<=2:
-        
-            matriz1.append(gerarAnalitica()) 
-    x=x+h
+#    while x<=2:
+    for i in range(0,n):
+        x=i*h
+        matriz1.append(gerarAnalitica(x)) 
+        x=x+h
         
     return matriz1
         
@@ -98,11 +114,11 @@ def matrizB():
 #    while x<=2:
     for i in range(0,n):
         x=i*h
-        if x != 0 and x != 2:
-            matriz.append(condInic(x))
-#        matriz.append(condCont(x))
-        else:
-            matriz.append(condCont(x))
+#        if x != 0 and x != 2:
+#            matriz.append(condInic(x))
+        matriz.append(condCont(x))
+#    else:
+#            matriz.append(condCont(x))
         x=x+h
         
     return matriz
@@ -113,7 +129,8 @@ def resolve(matrizA, matrizB):
     
 
        
-X=main()
+#X,E,soma,B2=main()
+X,E,soma=main()
 print X
 
 #salvarresultado
