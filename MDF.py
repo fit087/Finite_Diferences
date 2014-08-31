@@ -25,10 +25,12 @@ n= 41
 #    A = forme_matriz(n,m)
 kt=0.0005
 d=0.05
-L=2
+L=2.0
 u=1.0
+h=L/(n)
+print h
 k = 1.0
-pi = 3.141592653
+#pi = 3.141592653
 t = 0
 d = 0.05
 u = 1.0
@@ -36,11 +38,12 @@ a = 1.0
 v= 4
 vi=1
 
-def deltax():
-    return L/(n-vi)
+#def deltax():
+#    print L/(n-vi)
+#    return L/(n-vi)
     
-h= deltax()
-    
+#h= deltax()
+#print h
 # Coeficiente A
 def coefA():
     return -((u*kt)/(2*h)+(d*kt)/(h**2))
