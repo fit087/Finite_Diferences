@@ -27,7 +27,8 @@ kt=0.0005
 d=0.05
 L=2.0
 u=1.0
-h=L/(n)
+#h=L/(n)
+h=L/(n-1)
 print h
 k = 1.0
 #pi = 3.141592653
@@ -72,9 +73,11 @@ def condInic(x):
     
 # Matriz B
 def matrizB():
-    x = 0
+#    x = 0
     matriz = []
-    while x<=2:
+#    while x<=2:
+    for i in range(0,n):
+        x=i*h
         if x != 0 and x != 2:
             matriz.append(condInic(x))
 #        matriz.append(condCont(x))
