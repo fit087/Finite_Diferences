@@ -2,7 +2,7 @@
 """
 Created on Tue Aug 26 18:56:18 2014
 
-@author: Karyta Almeida
+@author: Raisa Cardoso
 """
 import math 
 import numpy as np
@@ -15,12 +15,13 @@ def main():
     B=matrizB()
     resultado=[]
     resultado.append(B)
-    for i in range(1,21):
+    #mudando o tempo de acordo com o deltat - para que chegue até t=1
+    for i in range(1,2000):
        B=resolve(A,B)
        resultado.append(B)
-       if i==1:
-         plot(B)
-         b2=B
+#       if i==300:
+       plot(B)
+#        b2=B
     an=calculo()
     i=0
     for i in range(0,n):
@@ -31,7 +32,7 @@ def main():
 #       sum+=(B-calculo())
 #       E=h*np.square(sum)
     return  resultado,E,soma#,#b2
-#    plot(X)
+    
 
     
     
@@ -39,9 +40,9 @@ def main():
 #def main ():
 n= 21
 #    A = forme_matriz(n,m)
-kt=0.05
+kt=0.0005
 
-d=0.05
+d=0.025
 L=2.0
 u=1.0
 #h=L/(n)
@@ -65,7 +66,7 @@ vi=1
 #print h
 # Coeficiente A
 def coefA():
-    return -((u*kt)/(2*h)+(d*kt)/(h**2))
+    return -((u*kt)/(2*h)-(d*kt)/(h**2))
     
 # Coeficiente B
 def coefB():
@@ -115,13 +116,14 @@ def matrizB():
     for i in range(0,n):
         x=i*h
 #        if x != 0 and x != 2:
-#            matriz.append(condInic(x))
+#        matriz.append(condInic(x))
         matriz.append(condCont(x))
 #    else:
 #            matriz.append(condCont(x))
         x=x+h
         
     return matriz
+    
      
 # X = A*B
 def resolve(matrizA, matrizB):
