@@ -8,21 +8,24 @@ import math
 import numpy as np
 
 def main():
+#Calculando o X a cada passo de tempo (0,05, 0,025, 0,0125)
     A=matrizIdent()
     B=matrizB()
     resultado=[]
     resultado.append(B)
-    for i in range(1,21):
+    for i in range(1,41):
        B=resolve(A,B)
+#       sum+=B-Sol_analitica
+#       E=h*np.square
        resultado.append(B)
     return  resultado   
     
 #def main ():
-n=21
-#    A = forme_matriz(n,n)
-kt=0.025
+n= 41
+#    A = forme_matriz(n,m)
+kt=0.0005
 d=0.05
-h=0.1
+L=2
 u=1.0
 k = 1.0
 pi = 3.141592653
@@ -30,10 +33,14 @@ t = 0
 d = 0.05
 u = 1.0
 a = 1.0
+v= 4
+vi=1
 
-
-#variaveis
-
+def deltax():
+    return L/(n-vi)
+    
+h= deltax()
+    
 # Coeficiente A
 def coefA():
     return -((u*kt)/(2*h)+(d*kt)/(h**2))
@@ -54,7 +61,7 @@ def matrizIdent():
 def condCont(x):
 
 #    return math.exp(-4*(pi**2))*math.sin(2*pi*k*(x-u*t))
-    return math.exp(-d*(k**2)*t)*math.sin(2*np.pi*k*(2-u*t))
+    return math.exp(-v*(np.pi**2))*math.sin(2*np.pi*k*(2-u*t))
     
 # Condição Inicial
 def condInic(x):
@@ -64,19 +71,24 @@ def condInic(x):
 def matrizB():
     x = 0
     matriz = []
-    while x<2.1:
+    while x<=2:
         if x != 0 and x != 2:
             matriz.append(condInic(x))
 #        matriz.append(condCont(x))
         else:
             matriz.append(condCont(x))
-        x=x+0.1
+        x=x+h
         
     return matriz
-    
+     
 # X = A*B
 def resolve(matrizA, matrizB):
     return np.linalg.solve(matrizA, matrizB)
+    
+
        
 X=main()
 print X
+
+#salvarresultado
+np.savetxt("matrizAl.csv",X , delimiter=",")
