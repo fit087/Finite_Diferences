@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 """
 Created on Tue Aug 26 18:56:18 2014
 
@@ -13,17 +13,20 @@ def main():
     B=matrizB()
     resultado=[]
     resultado.append(B)
-    for i in range(1,41):
+    for i in range(1):
        B=resolve(A,B)
 #       sum+=B-Sol_analitica
 #       E=h*np.square
        resultado.append(B)
-    return  resultado   
+    return  resultado
+
+    
+    
     
 #def main ():
-n= 41
+n= 21
 #    A = forme_matriz(n,m)
-kt=0.0005
+kt=0.05
 d=0.05
 L=2.0
 u=1.0
@@ -70,6 +73,23 @@ def condCont(x):
 # Condição Inicial
 def condInic(x):
     return math.sin(2.0*np.pi*k*(x*1.0))
+    
+##Solução analítica
+def gerarAnalitica():
+    x=0
+    return math.exp(-v*(np.pi**2))*math.sin(2*np.pi*k*(x-u*t))
+    
+def Calculo():  
+    x= 0
+    matriz1 = [] 
+    while x<=2:
+        
+            matriz1.append(gerarAnalitica()) 
+    x=x+h
+        
+    return matriz1
+        
+
     
 # Matriz B
 def matrizB():
